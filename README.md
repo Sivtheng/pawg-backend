@@ -22,7 +22,7 @@ Before setting up the project, ensure that the following are installed:
 6. Exit
 > \q
 
-## Create schema with golang-migrate\
+## Create schema with golang-migrate
 
 Since I already have the sql schemas, you only have to apply the migration.
 1. Install golang-migrate CLI
