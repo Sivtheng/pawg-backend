@@ -29,18 +29,25 @@ func InitDB() {
 }
 
 func SeedAdminUser() {
-	// Hash the password
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte("admin"), bcrypt.DefaultCost)
+	var userCount int
+	err := DB.QueryRow("SELECT COUNT(*) FROM users WHERE name = 'admin'").Scan(&userCount)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to check if admin user exists: %v", err)
 	}
 
-	// Insert the admin user
-	query := `INSERT INTO users (name, password) VALUES ($1, $2) ON CONFLICT DO NOTHING`
-	_, err = DB.Exec(query, "admin", string(hashedPassword))
-	if err != nil {
-		log.Fatal(err)
-	}
+	if userCount == 0 {
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte("admin"), bcrypt.DefaultCost)
+		if err != nil {
+			log.Fatalf("Failed to hash admin password: %v", err)
+		}
 
-	fmt.Println("Admin user seeded successfully!")
+		_, err = DB.Exec("INSERT INTO users (name, password) VALUES ($1, $2)", "admin", string(hashedPassword))
+		if err != nil {
+			log.Fatalf("Failed to seed admin user: %v", err)
+		}
+
+		log.Println("Admin user seeded successfully.")
+	} else {
+		log.Println("Admin user already exists, skipping seeding.")
+	}
 }

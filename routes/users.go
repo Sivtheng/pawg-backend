@@ -110,7 +110,7 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 // SetupRoutes sets up the HTTP routes for the application
 func SetupUserRoutes(r *mux.Router) {
 	r.HandleFunc("/users", CreateUserHandler).Methods("POST")
-	r.HandleFunc("/users/{id:[0-9]+}", GetUserHandler).Methods("GET")
-	r.HandleFunc("/users/{id:[0-9]+}", UpdateUserHandler).Methods("PUT")
-	r.HandleFunc("/users/{id:[0-9]+}", DeleteUserHandler).Methods("DELETE")
+	r.HandleFunc("/users/{id}", GetUserHandler).Methods("GET")
+	r.HandleFunc("/users/{id}", UpdateUserHandler).Methods("PUT")
+	r.HandleFunc("/users/{id}", DeleteUserHandler).Methods("DELETE")
 }

@@ -2,13 +2,18 @@ package models
 
 import (
 	"database/sql"
+	"errors"
 	"time"
+
+	"github.com/dgrijalva/jwt-go"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
 	ID        int       `json:"id"`
 	Name      string    `json:"name"`
-	Password  string    `json:"password"`
+	Password  string    `json:"-"`
+	Token     string    `json:"token,omitempty"`
 	CreatedAt time.Time `json:"created_at"`
 }
 
@@ -59,4 +64,52 @@ func DeleteUser(db *sql.DB, id int) error {
         DELETE FROM users WHERE id = $1
     `, id)
 	return err
+}
+
+var jwtKey = []byte("your_secret_key")
+
+func (u *User) SetPassword(password string) error {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	u.Password = string(hashedPassword)
+	return nil
+}
+
+func (u *User) CheckPassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+	return err == nil
+}
+
+func (u *User) GenerateToken() (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"user_id": u.ID,
+		"exp":     time.Now().Add(time.Hour * 72).Unix(),
+	})
+	tokenString, err := token.SignedString(jwtKey)
+	if err != nil {
+		return "", err
+	}
+	return tokenString, nil
+}
+
+func AuthenticateUser(db *sql.DB, name, password string) (*User, error) {
+	user := &User{}
+	err := db.QueryRow("SELECT id, name, password FROM users WHERE name=$1", name).Scan(&user.ID, &user.Name, &user.Password)
+	if err != nil {
+		return nil, err
+	}
+
+	if !user.CheckPassword(password) {
+		return nil, errors.New("invalid password")
+	}
+
+	token, err := user.GenerateToken()
+	if err != nil {
+		return nil, err
+	}
+
+	user.Token = token
+	return user, nil
 }

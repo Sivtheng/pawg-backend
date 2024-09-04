@@ -81,3 +81,14 @@ Here are the available API endpoints and their usage:
 > curl -X PUT "Endpoint" \ -H "Content-Type: application/json" \ -d '{"name": "Alice Johnson", "email": "alice.johnson@example.com", "phone_number": "555-4321", "address": "456 Oak Avenue", "interest_in_adopting": "Cat", "type_of_animal": "Cat", "special_needs_animal": "No", "own_pet_before": "No", "working_time": "8am - 4pm", "living_situation": "Apartment", "other_animals": "One dog", "animal_access": "Indoor and outdoor", "travel": "No", "leave_cambodia": "Yes", "feed": "Once a day", "anything_else": "Looking forward to adopting"}'
 - Delete Adoption Application by ID: http://localhost:8080/adoption_applications/{id}
 > curl -X DELETE "Endpoint"
+
+## Authentication
+
+To access protected routes, first log in to receive a JWT token:
+- Login: http://localhost:8080/login
+>    curl -X POST "Endpoint" \ -H "Content-Type: application/json" \ -d '{"name": "John Doe", "password": "securepassword"}'
+
+
+
+curl -X GET http://localhost:8080/api/users \
+     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjU2OTIxMTIsInVzZXJfaWQiOjR9.4Z6_0zfqyUDL6okPxDLy-wRqWJ4Bq2XGQzR4RD5gkJQ"

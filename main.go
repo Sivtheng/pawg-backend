@@ -13,6 +13,9 @@ func main() {
 	// Initialize the database
 	db.InitDB()
 
+	// Seed the admin user
+	db.SeedAdminUser()
+
 	// Create a new router
 	r := mux.NewRouter()
 

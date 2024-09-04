@@ -87,7 +87,7 @@ func DeleteGetInTouchHandler(w http.ResponseWriter, r *http.Request) {
 
 func SetupGetInTouchRoutes(r *mux.Router) {
 	r.HandleFunc("/get_in_touch", CreateGetInTouchHandler).Methods("POST")
-	r.HandleFunc("/get_in_touch/{id:[0-9]+}", GetGetInTouchHandler).Methods("GET")
-	r.HandleFunc("/get_in_touch/{id:[0-9]+}", UpdateGetInTouchHandler).Methods("PUT")
-	r.HandleFunc("/get_in_touch/{id:[0-9]+}", DeleteGetInTouchHandler).Methods("DELETE")
+	r.HandleFunc("/get_in_touch/{id}", GetGetInTouchHandler).Methods("GET")
+	r.HandleFunc("/get_in_touch/{id}", UpdateGetInTouchHandler).Methods("PUT")
+	r.HandleFunc("/get_in_touch/{id}", DeleteGetInTouchHandler).Methods("DELETE")
 }
