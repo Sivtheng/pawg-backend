@@ -6,6 +6,14 @@ Before setting up the project, ensure that the following are installed:
 1. Golang
 2. Postgresql
 
+
+## Running the API (Set up everything first)
+
+1. Install dependencies
+> go mod tidy
+2. Run the server
+> go run main.go
+
 ## Set up the database
 
 1. Access Postgresql (Assuming you are admin user on your pc)
@@ -84,11 +92,9 @@ Here are the available API endpoints and their usage:
 
 ## Authentication
 
+JWT Token: The API uses JWT tokens for authentication. Tokens are issued upon successful login and must be included in the Authorization header for protected routes.
 To access protected routes, first log in to receive a JWT token:
 - Login: http://localhost:8080/login
 >    curl -X POST "Endpoint" \ -H "Content-Type: application/json" \ -d '{"name": "John Doe", "password": "securepassword"}'
-
-
-
-curl -X GET http://localhost:8080/api/users \
-     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjU2OTIxMTIsInVzZXJfaWQiOjR9.4Z6_0zfqyUDL6okPxDLy-wRqWJ4Bq2XGQzR4RD5gkJQ"
+- Test 
+> curl -X GET http://localhost:8080/api/users \ -H "Authorization: Bearer JWT_TOKEN"
