@@ -1,4 +1,4 @@
-# Setup for Golang API for Pawg
+# Golang API for Pawg ver: 1.0.0-alpha
 
 ## Prerequisites
 
@@ -98,3 +98,34 @@ To access protected routes, first log in to receive a JWT token:
 >    curl -X POST "Endpoint" \ -H "Content-Type: application/json" \ -d '{"name": "John Doe", "password": "securepassword"}'
 - Test 
 > curl -X GET http://localhost:8080/api/users \ -H "Authorization: Bearer JWT_TOKEN"
+
+## Possible features and improvements
+
+1. Pagination and Filtering
+- Implement pagination for endpoints that return a list of resources
+- Allow filtering of results based on query parameters (ex: filter users by creation date, etc)
+2. Validation
+- Add validation for input data to ensure it meets the expected format and constraints (ex: validate email format, required fields). This also probably can be done in frontend too.
+- Custom Validation Messages: Provide user-friendly error messages for validation failures.
+3. Rate Limiting
+- Implement rate limiting to prevent abuse of the API and manage traffic effectively
+4. Logging
+- Request/Response Logging: Log API requests and responses for debugging and monitoring.
+- Structured Logging: Use a structured logging library to log data in a structured format (e.g., JSON) for easier analysis.
+5. Better API Documentation
+- Swagger/OpenAPI: Use Swagger or OpenAPI to generate interactive API documentation for easier understanding and testing of your endpoints.
+6. Error Handling
+- Custom Error Responses: Create a standardized format for error responses to ensure consistency across the API.
+- Error Logging: Log errors to track issues and improve debugging.
+7. Testing
+- Unit Tests: Write comprehensive unit tests for your handlers, models, and middleware.
+- Integration Tests: Implement integration tests to verify the interactions between different components of the system.
+- CI/CD Pipeline: Set up a Continuous Integration/Continuous Deployment (CI/CD) pipeline to automate testing and deployment processes.
+8. Better Security
+- HTTPS: Configure your API to use HTTPS to secure data transmission.
+- Input Sanitization: Ensure all inputs are sanitized to prevent security vulnerabilities like SQL injection or XSS.
+9. Caching 
+- In-Memory Caching: Use an in-memory cache (e.g., Redis) to improve performance for frequently accessed data.
+- HTTP Caching: Implement HTTP caching mechanisms to reduce server load and improve response times.
+10. Background Jobs
+- Asynchronous Processing: Implement background job processing for tasks that can be performed asynchronously, such as sending emails
