@@ -17,17 +17,23 @@ type User struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+// Insert new user into database with a hashed password, returns the created user with ID and creation timestamp
 func CreateUser(db *sql.DB, name, password string) (*User, error) {
 	var user User
-	err := db.QueryRow(`
+	// Hash the password before storing it
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil, err
+	}
+	err = db.QueryRow(`
         INSERT INTO users (name, password)
         VALUES ($1, $2) RETURNING id, created_at
-    `, name, password).Scan(&user.ID, &user.CreatedAt)
+    `, name, hashedPassword).Scan(&user.ID, &user.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
 	user.Name = name
-	user.Password = password
+	user.Password = string(hashedPassword)
 	return &user, nil
 }
 
