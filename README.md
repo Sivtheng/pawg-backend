@@ -41,43 +41,43 @@ Here are the available API endpoints and their usage:
 ### Users
 
 - Create User: http://localhost:8080/users
-> curl -X POST http://localhost:8080/users \ -H "Content-Type: application/json" \ -d '{"name": "John Doe", "password": "securepassword"}'
+> curl -X POST "Endpoint" \ -H "Content-Type: application/json" \ -d '{"name": "John Doe", "password": "securepassword"}'
 - Get User by ID: http://localhost:8080/users/{id}
-> curl -X GET http://localhost:8080/users/{id}
+> curl -X GET "Endpoint"
 - Update User by ID http://localhost:8080/users/{id}
-> curl -X PUT http://localhost:8080/users/{id} \ -H "Content-Type: application/json" \ -d '{"name": "John Doe", "password": "newpassword"}'
+> curl -X PUT "Endpoint" \ -H "Content-Type: application/json" \ -d '{"name": "John Doe", "password": "newpassword"}'
 - Delete User by ID: http://localhost:8080/users/{id}
-> curl -X DELETE http://localhost:8080/users/{id}
+> curl -X DELETE "Endpoint"
 
 ### Get In Touch
 
 - Create Contact: http://localhost:8080/get_in_touch
-> curl -X POST http://localhost:8080/get_in_touch \ -H "Content-Type: application/json" \ -d '{"name": "Jane Doe", "email": "jane@example.com", "message": "Hello there!"}'
+> curl -X POST "Endpoint"h \ -H "Content-Type: application/json" \ -d '{"name": "Jane Doe", "email": "jane@example.com", "message": "Hello there!"}'
 - Get Contact by ID: http://localhost:8080/get_in_touch/{id}
-> curl -X GET http://localhost:8080/get_in_touch/{id}
+> curl -X GET "Endpoint"
 - Update Contact by ID: http://localhost:8080/get_in_touch/{id}
-> curl -X PUT http://localhost:8080/get_in_touch/{id} \ -H "Content-Type: application/json" \ -d '{"name": "Jane Doe", "email": "jane.doe@example.com", "message": "Updated message"}'
+> curl -X PUT "Endpoint"} \ -H "Content-Type: application/json" \ -d '{"name": "Jane Doe", "email": "jane.doe@example.com", "message": "Updated message"}'
 - Delete Contact by ID: http://localhost:8080/get_in_touch/{id}
-> curl -X DELETE http://localhost:8080/get_in_touch/{id}
+> curl -X DELETE "Endpoint"
 
 ### Appointments
 
 - Create Appointments: http://localhost:8080/appointments
-> curl -X POST http://localhost:8080/appointments \ -H "Content-Type: application/json" \ -d '{"name": "John Doe", "email": "john@example.com", "phone_number": "555-1234", "appointment_date": "2024-09-10", "appointment_time": "14:00:00"}'
+> curl -X POST "Endpoint" \ -H "Content-Type: application/json" \ -d '{"name": "John Doe", "email": "john@example.com", "phone_number": "555-1234", "appointment_date": "2024-09-10", "appointment_time": "14:00:00"}'
 - Get Appointment by ID: http://localhost:8080/appointments/{id}
-> curl -X GET http://localhost:8080/appointments/{id}
+> curl -X GET "Endpoint"
 - Update Appointment by ID: http://localhost:8080/appointments/{id}
-> curl -X PUT http://localhost:8080/appointments/{id} \ -H "Content-Type: application/json" \ -d '{"name": "Jane Doe", "email": "jane@example.com", "phone_number": "555-5678", "appointment_date": "2024-09-11", "appointment_time": "15:00:00"}'
+> curl -X PUT "Endpoint" \ -H "Content-Type: application/json" \ -d '{"name": "Jane Doe", "email": "jane@example.com", "phone_number": "555-5678", "appointment_date": "2024-09-11", "appointment_time": "15:00:00"}'
 - Delete Appointment by ID: http://localhost:8080/appointments/{id}
-> curl -X DELETE http://localhost:8080/appointments/{id}
+> curl -X DELETE "Endpoint"
 
 ### Adoption Application
 
 - Create Adoption Application: http://localhost:8080/adoption_applications
-> curl -X POST http://localhost:8080/adoption_applications \ -H "Content-Type: application/json" \ -d '{ "name": "Alice Smith", "email": "alice@example.com", "phone_number": "555-9876", "address": "123 Elm Street", "interest_in_adopting": "Dog", "type_of_animal": "Dog", "special_needs_animal": "No", "own_pet_before": "Yes", "working_time": "9am - 5pm", "living_situation": "House", "other_animals": "None", "animal_access": "Indoor", "travel": "Yes", "leave_cambodia": "No", "feed": "Twice a day", "anything_else": "N/A"}'
+> curl -X POST "Endpoint" \ -H "Content-Type: application/json" \ -d '{ "name": "Alice Smith", "email": "alice@example.com", "phone_number": "555-9876", "address": "123 Elm Street", "interest_in_adopting": "Dog", "type_of_animal": "Dog", "special_needs_animal": "No", "own_pet_before": "Yes", "working_time": "9am - 5pm", "living_situation": "House", "other_animals": "None", "animal_access": "Indoor", "travel": "Yes", "leave_cambodia": "No", "feed": "Twice a day", "anything_else": "N/A"}'
 - Get Adoption Application by ID: http://localhost:8080/adoption_applications/{id}
-> curl -X GET http://localhost:8080/adoption_applications/{id}
+> curl -X GET "Endpoint"
 - Update Adoption Application by ID: http://localhost:8080/adoption_applications/{id}
-> curl -X PUT http://localhost:8080/adoption_applications/{id} \ -H "Content-Type: application/json" \ -d '{"name": "Alice Johnson", "email": "alice.johnson@example.com", "phone_number": "555-4321", "address": "456 Oak Avenue", "interest_in_adopting": "Cat", "type_of_animal": "Cat", "special_needs_animal": "No", "own_pet_before": "No", "working_time": "8am - 4pm", "living_situation": "Apartment", "other_animals": "One dog", "animal_access": "Indoor and outdoor", "travel": "No", "leave_cambodia": "Yes", "feed": "Once a day", "anything_else": "Looking forward to adopting"}'
+> curl -X PUT "Endpoint" \ -H "Content-Type: application/json" \ -d '{"name": "Alice Johnson", "email": "alice.johnson@example.com", "phone_number": "555-4321", "address": "456 Oak Avenue", "interest_in_adopting": "Cat", "type_of_animal": "Cat", "special_needs_animal": "No", "own_pet_before": "No", "working_time": "8am - 4pm", "living_situation": "Apartment", "other_animals": "One dog", "animal_access": "Indoor and outdoor", "travel": "No", "leave_cambodia": "Yes", "feed": "Once a day", "anything_else": "Looking forward to adopting"}'
 - Delete Adoption Application by ID: http://localhost:8080/adoption_applications/{id}
-> curl -X DELETE http://localhost:8080/adoption_applications/{id}
+> curl -X DELETE "Endpoint"
