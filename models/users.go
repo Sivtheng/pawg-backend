@@ -20,23 +20,28 @@ type User struct {
 // Insert new user into database with a hashed password, returns the created user with ID and creation timestamp
 func CreateUser(db *sql.DB, name, password string) (*User, error) {
 	var user User
-	// Hash the password before storing it
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	if err != nil {
+
+	// Create a new User instance
+	user.Name = name
+
+	// Set the hashed password using the SetPassword method
+	if err := user.SetPassword(password); err != nil {
 		return nil, err
 	}
-	err = db.QueryRow(`
+
+	// Insert the user into the database
+	err := db.QueryRow(`
         INSERT INTO users (name, password)
         VALUES ($1, $2) RETURNING id, created_at
-    `, name, hashedPassword).Scan(&user.ID, &user.CreatedAt)
+    `, user.Name, user.Password).Scan(&user.ID, &user.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
-	user.Name = name
-	user.Password = string(hashedPassword)
+
 	return &user, nil
 }
 
+// Retrieves a user from database by ID and return details
 func GetUserByID(db *sql.DB, id int) (*User, error) {
 	var user User
 	err := db.QueryRow(`
@@ -49,6 +54,7 @@ func GetUserByID(db *sql.DB, id int) (*User, error) {
 	return &user, nil
 }
 
+// Update an existing user's details in database
 func UpdateUser(db *sql.DB, id int, name, password string) (*User, error) {
 	var user User
 	err := db.QueryRow(`
@@ -65,6 +71,7 @@ func UpdateUser(db *sql.DB, id int, name, password string) (*User, error) {
 	return &user, nil
 }
 
+// Remove a user from database by ID
 func DeleteUser(db *sql.DB, id int) error {
 	_, err := db.Exec(`
         DELETE FROM users WHERE id = $1
@@ -72,8 +79,11 @@ func DeleteUser(db *sql.DB, id int) error {
 	return err
 }
 
+// jwtKey is used to sign and verify JWT tokens
 var jwtKey = []byte("your_secret_key")
 
+// Hashes and set the user's password
+// This is used when creating or updating an user's password
 func (u *User) SetPassword(password string) error {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
@@ -83,11 +93,13 @@ func (u *User) SetPassword(password string) error {
 	return nil
 }
 
+// Compares the given password with the stored hashed password.
 func (u *User) CheckPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	return err == nil
 }
 
+// Creates a jwt token for the user with a 72 hours expiration time.
 func (u *User) GenerateToken() (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": u.ID,
@@ -100,6 +112,7 @@ func (u *User) GenerateToken() (string, error) {
 	return tokenString, nil
 }
 
+// Verifies the user's credentials and generate a JWT token
 func AuthenticateUser(db *sql.DB, name, password string) (*User, error) {
 	user := &User{}
 	err := db.QueryRow("SELECT id, name, password FROM users WHERE name=$1", name).Scan(&user.ID, &user.Name, &user.Password)

@@ -13,6 +13,7 @@ type GetInTouch struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+// Insert new record into database and return with ID and creation timestamp
 func CreateGetInTouch(db *sql.DB, name, email, message string) (*GetInTouch, error) {
 	var getInTouch GetInTouch
 	err := db.QueryRow(
@@ -28,6 +29,7 @@ func CreateGetInTouch(db *sql.DB, name, email, message string) (*GetInTouch, err
 	return &getInTouch, nil
 }
 
+// Retrieves record from database by ID and return details
 func GetGetInTouchByID(db *sql.DB, id int) (*GetInTouch, error) {
 	var getInTouch GetInTouch
 	err := db.QueryRow(
@@ -40,6 +42,7 @@ func GetGetInTouchByID(db *sql.DB, id int) (*GetInTouch, error) {
 	return &getInTouch, nil
 }
 
+// Update existing record in database with new info and return updated details
 func UpdateGetInTouch(db *sql.DB, id int, name, email, message string) (*GetInTouch, error) {
 	var getInTouch GetInTouch
 	err := db.QueryRow(
@@ -55,6 +58,7 @@ func UpdateGetInTouch(db *sql.DB, id int, name, email, message string) (*GetInTo
 	return &getInTouch, nil
 }
 
+// Remove record from database by ID
 func DeleteGetInTouch(db *sql.DB, id int) error {
 	_, err := db.Exec(`DELETE FROM get_in_touch WHERE id = $1`, id)
 	return err

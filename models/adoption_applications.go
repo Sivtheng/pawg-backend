@@ -26,6 +26,7 @@ type AdoptionApplication struct {
 	CreatedAt          time.Time `json:"created_at"`
 }
 
+// Insert new application into database and return the created application with its ID and creation timestamo
 func CreateAdoptionApplication(db *sql.DB, name, email, phoneNumber, address, interestInAdopting, typeOfAnimal, specialNeedsAnimal, ownPetBefore, workingTime, livingSituation, otherAnimals, animalAccess, travel, leaveCambodia, feed, anythingElse string) (*AdoptionApplication, error) {
 	var application AdoptionApplication
 	err := db.QueryRow(
@@ -55,6 +56,7 @@ func CreateAdoptionApplication(db *sql.DB, name, email, phoneNumber, address, in
 	return &application, nil
 }
 
+// Retrieves application from database by ID and return the details
 func GetAdoptionApplicationByID(db *sql.DB, id int) (*AdoptionApplication, error) {
 	var application AdoptionApplication
 	err := db.QueryRow(
@@ -68,6 +70,7 @@ func GetAdoptionApplicationByID(db *sql.DB, id int) (*AdoptionApplication, error
 	return &application, nil
 }
 
+// Update existing application in database with new info and return the updated application
 func UpdateAdoptionApplication(db *sql.DB, id int, name, email, phoneNumber, address, interestInAdopting, typeOfAnimal, specialNeedsAnimal, ownPetBefore, workingTime, livingSituation, otherAnimals, animalAccess, travel, leaveCambodia, feed, anythingElse string) (*AdoptionApplication, error) {
 	var application AdoptionApplication
 	err := db.QueryRow(
@@ -96,6 +99,7 @@ func UpdateAdoptionApplication(db *sql.DB, id int, name, email, phoneNumber, add
 	return &application, nil
 }
 
+// Remove application from database based on ID
 func DeleteAdoptionApplication(db *sql.DB, id int) error {
 	_, err := db.Exec(`DELETE FROM adoption_applications WHERE id = $1`, id)
 	return err
