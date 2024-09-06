@@ -117,7 +117,7 @@ func DeleteAdoptionApplicationHandler(w http.ResponseWriter, r *http.Request) {
 // set up the routes for handling adoption applications
 func SetupAdoptionApplicationRoutes(r *mux.Router) {
 	r.HandleFunc("/adoption_applications", CreateAdoptionApplicationHandler).Methods("POST")
-	r.HandleFunc("/adoption_applications", CreateAdoptionApplicationHandler).Methods("GET")
+	r.HandleFunc("/adoption_applications", ListAdoptionApplicationsHandler).Methods("GET")
 	r.HandleFunc("/adoption_applications/{id}", GetAdoptionApplicationHandler).Methods("GET")
 	r.HandleFunc("/adoption_applications/{id}", UpdateAdoptionApplicationHandler).Methods("PUT")
 	r.HandleFunc("/adoption_applications/{id}", DeleteAdoptionApplicationHandler).Methods("DELETE")

@@ -137,7 +137,7 @@ func DeleteAppointmentHandler(w http.ResponseWriter, r *http.Request) {
 // SetupRoutes initializes the routes for appointments
 func SetupAppointmentRoutes(router *mux.Router) {
 	router.HandleFunc("/appointments", CreateAppointmentHandler).Methods("POST")
-	router.HandleFunc("/appointments", CreateAppointmentHandler).Methods("GET")
+	router.HandleFunc("/appointments", ListAppointmentsHandler).Methods("GET")
 	router.HandleFunc("/appointments/{id}", GetAppointmentHandler).Methods("GET")
 	router.HandleFunc("/appointments/{id}", UpdateAppointmentHandler).Methods("PUT")
 	router.HandleFunc("/appointments/{id}", DeleteAppointmentHandler).Methods("DELETE")
