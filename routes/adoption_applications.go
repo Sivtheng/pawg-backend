@@ -10,6 +10,17 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// ListAdoptionApplicationsHandler handles GET requests to list all adoption applications
+func ListAdoptionApplicationsHandler(w http.ResponseWriter, r *http.Request) {
+	applications, err := models.ListAdoptionApplications(db.DB)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(applications)
+}
+
 // handles POST requests to create a new adoption application
 func CreateAdoptionApplicationHandler(w http.ResponseWriter, r *http.Request) {
 	// check if request method is post
@@ -106,6 +117,7 @@ func DeleteAdoptionApplicationHandler(w http.ResponseWriter, r *http.Request) {
 // set up the routes for handling adoption applications
 func SetupAdoptionApplicationRoutes(r *mux.Router) {
 	r.HandleFunc("/adoption_applications", CreateAdoptionApplicationHandler).Methods("POST")
+	r.HandleFunc("/adoption_applications", CreateAdoptionApplicationHandler).Methods("GET")
 	r.HandleFunc("/adoption_applications/{id}", GetAdoptionApplicationHandler).Methods("GET")
 	r.HandleFunc("/adoption_applications/{id}", UpdateAdoptionApplicationHandler).Methods("PUT")
 	r.HandleFunc("/adoption_applications/{id}", DeleteAdoptionApplicationHandler).Methods("DELETE")

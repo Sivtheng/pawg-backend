@@ -10,6 +10,17 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// ListUsersHandler handles GET requests to list all users
+func ListUsersHandler(w http.ResponseWriter, r *http.Request) {
+	users, err := models.ListUsers(db.DB)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(users)
+}
+
 // CreateUserHandler handles POST requests to create a new user
 func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -110,6 +121,7 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 // SetupRoutes sets up the HTTP routes for the application
 func SetupUserRoutes(r *mux.Router) {
 	r.HandleFunc("/users", CreateUserHandler).Methods("POST")
+	r.HandleFunc("/users", ListUsersHandler).Methods("GET")
 	r.HandleFunc("/users/{id}", GetUserHandler).Methods("GET")
 	r.HandleFunc("/users/{id}", UpdateUserHandler).Methods("PUT")
 	r.HandleFunc("/users/{id}", DeleteUserHandler).Methods("DELETE")

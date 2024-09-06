@@ -11,6 +11,17 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// ListAppointmentsHandler handles GET requests to list all appointments
+func ListAppointmentsHandler(w http.ResponseWriter, r *http.Request) {
+	appointments, err := models.ListAppointments(db.DB)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(appointments)
+}
+
 // CreateAppointmentHandler handles creating a new appointment
 func CreateAppointmentHandler(w http.ResponseWriter, r *http.Request) {
 	var appointment models.Appointment
@@ -126,6 +137,7 @@ func DeleteAppointmentHandler(w http.ResponseWriter, r *http.Request) {
 // SetupRoutes initializes the routes for appointments
 func SetupAppointmentRoutes(router *mux.Router) {
 	router.HandleFunc("/appointments", CreateAppointmentHandler).Methods("POST")
+	router.HandleFunc("/appointments", CreateAppointmentHandler).Methods("GET")
 	router.HandleFunc("/appointments/{id}", GetAppointmentHandler).Methods("GET")
 	router.HandleFunc("/appointments/{id}", UpdateAppointmentHandler).Methods("PUT")
 	router.HandleFunc("/appointments/{id}", DeleteAppointmentHandler).Methods("DELETE")

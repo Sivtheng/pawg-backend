@@ -17,6 +17,30 @@ type User struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+// ListUsers retrieves all users from the database
+func ListUsers(db *sql.DB) ([]User, error) {
+	rows, err := db.Query(`SELECT id, name, password, created_at FROM users`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var userList []User
+	for rows.Next() {
+		var user User
+		if err := rows.Scan(&user.ID, &user.Name, &user.Password, &user.CreatedAt); err != nil {
+			return nil, err
+		}
+		userList = append(userList, user)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return userList, nil
+}
+
 // Insert new user into database with a hashed password, returns the created user with ID and creation timestamp
 func CreateUser(db *sql.DB, name, password string) (*User, error) {
 	var user User

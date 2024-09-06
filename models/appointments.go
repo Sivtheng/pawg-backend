@@ -16,6 +16,30 @@ type Appointment struct {
 	CreatedAt       time.Time `json:"created_at"`
 }
 
+// ListAppointments retrieves all appointments from the database
+func ListAppointments(db *sql.DB) ([]Appointment, error) {
+	rows, err := db.Query(`SELECT id, name, email, phone_number, appointment_date, appointment_time, created_at FROM appointments`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var appointmentList []Appointment
+	for rows.Next() {
+		var appointment Appointment
+		if err := rows.Scan(&appointment.ID, &appointment.Name, &appointment.Email, &appointment.PhoneNumber, &appointment.AppointmentDate, &appointment.AppointmentTime, &appointment.CreatedAt); err != nil {
+			return nil, err
+		}
+		appointmentList = append(appointmentList, appointment)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return appointmentList, nil
+}
+
 // CreateAppointment inserts a new appointment into the database
 func CreateAppointment(db *sql.DB, name, email, phoneNumber, appointmentDate, appointmentTime string) (*Appointment, error) {
 	var appointment Appointment

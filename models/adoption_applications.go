@@ -26,6 +26,30 @@ type AdoptionApplication struct {
 	CreatedAt          time.Time `json:"created_at"`
 }
 
+// ListAdoptionApplications retrieves all adoption applications from the database
+func ListAdoptionApplications(db *sql.DB) ([]AdoptionApplication, error) {
+	rows, err := db.Query(`SELECT id, name, email, phone_number, address, interest_in_adopting, type_of_animal, special_needs_animal, own_pet_before, working_time, living_situation, other_animals, animal_access, travel, leave_cambodia, feed, anything_else, created_at FROM adoption_applications`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var applicationList []AdoptionApplication
+	for rows.Next() {
+		var application AdoptionApplication
+		if err := rows.Scan(&application.ID, &application.Name, &application.Email, &application.PhoneNumber, &application.Address, &application.InterestInAdopting, &application.TypeOfAnimal, &application.SpecialNeedsAnimal, &application.OwnPetBefore, &application.WorkingTime, &application.LivingSituation, &application.OtherAnimals, &application.AnimalAccess, &application.Travel, &application.LeaveCambodia, &application.Feed, &application.AnythingElse, &application.CreatedAt); err != nil {
+			return nil, err
+		}
+		applicationList = append(applicationList, application)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return applicationList, nil
+}
+
 // Insert new application into database and return the created application with its ID and creation timestamo
 func CreateAdoptionApplication(db *sql.DB, name, email, phoneNumber, address, interestInAdopting, typeOfAnimal, specialNeedsAnimal, ownPetBefore, workingTime, livingSituation, otherAnimals, animalAccess, travel, leaveCambodia, feed, anythingElse string) (*AdoptionApplication, error) {
 	var application AdoptionApplication

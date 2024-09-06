@@ -10,6 +10,19 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// ListGetInTouchHandler handles GET requests to list all "Get In Touch" entries
+func ListGetInTouchHandler(w http.ResponseWriter, r *http.Request) {
+	// Call the model function to get all entries from the database
+	getInTouchList, err := models.ListGetInTouch(db.DB)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Encode the list of entries as JSON and send it in the response
+	json.NewEncoder(w).Encode(getInTouchList)
+}
+
 func CreateGetInTouchHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -87,6 +100,7 @@ func DeleteGetInTouchHandler(w http.ResponseWriter, r *http.Request) {
 
 func SetupGetInTouchRoutes(r *mux.Router) {
 	r.HandleFunc("/get_in_touch", CreateGetInTouchHandler).Methods("POST")
+	r.HandleFunc("/get_in_touch", ListGetInTouchHandler).Methods("GET")
 	r.HandleFunc("/get_in_touch/{id}", GetGetInTouchHandler).Methods("GET")
 	r.HandleFunc("/get_in_touch/{id}", UpdateGetInTouchHandler).Methods("PUT")
 	r.HandleFunc("/get_in_touch/{id}", DeleteGetInTouchHandler).Methods("DELETE")

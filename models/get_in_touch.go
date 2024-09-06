@@ -13,6 +13,30 @@ type GetInTouch struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+// ListGetInTouch retrieves all "Get In Touch" entries from the database
+func ListGetInTouch(db *sql.DB) ([]GetInTouch, error) {
+	rows, err := db.Query(`SELECT id, name, email, message, created_at FROM get_in_touch`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var getInTouchList []GetInTouch
+	for rows.Next() {
+		var getInTouch GetInTouch
+		if err := rows.Scan(&getInTouch.ID, &getInTouch.Name, &getInTouch.Email, &getInTouch.Message, &getInTouch.CreatedAt); err != nil {
+			return nil, err
+		}
+		getInTouchList = append(getInTouchList, getInTouch)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return getInTouchList, nil
+}
+
 // Insert new record into database and return with ID and creation timestamp
 func CreateGetInTouch(db *sql.DB, name, email, message string) (*GetInTouch, error) {
 	var getInTouch GetInTouch
