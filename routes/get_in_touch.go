@@ -4,6 +4,7 @@ import (
 	"backend/db"
 	"backend/models"
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -37,6 +38,7 @@ func CreateGetInTouchHandler(w http.ResponseWriter, r *http.Request) {
 
 	newGetInTouch, err := models.CreateGetInTouch(db.DB, getInTouch.Name, getInTouch.Email, getInTouch.Message)
 	if err != nil {
+		log.Printf("Error creating get in touch record: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

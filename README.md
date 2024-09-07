@@ -48,31 +48,31 @@ Here are the available API endpoints and their usage:
 
 ### Users
 
-- List and Create User: http://localhost:8080/users
-- Get User by ID: http://localhost:8080/users/{id}\
-- Update User by ID http://localhost:8080/users/{id}
-- Delete User by ID: http://localhost:8080/users/{id}
+- List and Create User: http://localhost:8080/api/users
+- Get User by ID: http://localhost:8080/api/users/{id}\
+- Update User by ID http://localhost:8080/api/users/{id}
+- Delete User by ID: http://localhost:8080/api/users/{id}
 
 ### Get In Touch
 
-- List and Create Contact: http://localhost:8080/get_in_touch
-- Get Contact by ID: http://localhost:8080/get_in_touch/{id}
-- Update Contact by ID: http://localhost:8080/get_in_touch/{id}
-- Delete Contact by ID: http://localhost:8080/get_in_touch/{id}
+- List and Create Contact: http://localhost:8080/api/get_in_touch
+- Get Contact by ID: http://localhost:8080/api/get_in_touch/{id}
+- Update Contact by ID: http://localhost:8080/api/get_in_touch/{id}
+- Delete Contact by ID: http://localhost:8080/api/get_in_touch/{id}
 
 ### Appointments
 
-- List and Create Appointments: http://localhost:8080/appointments
-- Get Appointment by ID: http://localhost:8080/appointments/{id}
-- Update Appointment by ID: http://localhost:8080/appointments/{id}
-- Delete Appointment by ID: http://localhost:8080/appointments/{id}
+- List and Create Appointments: http://localhost:8080/api/appointments
+- Get Appointment by ID: http://localhost:8080/api/appointments/{id}
+- Update Appointment by ID: http://localhost:8080/api/appointments/{id}
+- Delete Appointment by ID: http://localhost:8080/api/appointments/{id}
 
 ### Adoption Application
 
-- List and Create Adoption Application: http://localhost:8080/adoption_applications
-- Get Adoption Application by ID: http://localhost:8080/adoption_applications/{id}
-- Update Adoption Application by ID: http://localhost:8080/adoption_applications/{id}
-- Delete Adoption Application by ID: http://localhost:8080/adoption_applications/{id}
+- List and Create Adoption Application: http://localhost:8080/api/adoption_applications
+- Get Adoption Application by ID: http://localhost:8080/api/adoption_applications/{id}
+- Update Adoption Application by ID: http://localhost:8080/api/adoption_applications/{id}
+- Delete Adoption Application by ID: http://localhost:8080/api/adoption_applications/{id}
 
 ## Authentication
 
