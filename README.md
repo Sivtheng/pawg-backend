@@ -41,6 +41,7 @@ Since I already have the sql schemas, you only have to apply the migration.
 > migrate -path directory_here -database "postgres://myuser:mypassword@localhost:5432/mydb?sslmode=disable" up
 5. If need to roll back migrations
 > migrate -path directory_here -database "postgres://myuser:mypassword@localhost:5432/mydb?sslmode=disable" down
+6. in DB user and password in db.go 
 
 ## API Endpoints
 
